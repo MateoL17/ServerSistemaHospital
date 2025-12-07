@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Servicio de base de datos MySQL
+  mysql-db:
+    image: mysql:8.0
+    container_name: hospital-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: hospital_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD:
+    ports:
+      - "3306:3306"
+    volumes:
+      # Volumen para persistencia de datos
+      - mysql-data:/var/lib/mysql
+      # Script SQL de inicialización
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      # Configuración personalizada de MySQL
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    networks:
+      - hospital-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Opcional: PHPMyAdmin para gestión visual de la BD
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: hospital-phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - mysql-db
+    environment:
+      PMA_HOST: mysql-db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 0
+    ports:
+      - "8081:80"
+    networks:
+      - hospital-network
+
+# Volúmenes para persistencia
+volumes:
+  mysql-data:
+    driver: local
+
+# Redes para comunicación entre contenedores
+networks:
+  hospital-network:
+    driver: bridge
