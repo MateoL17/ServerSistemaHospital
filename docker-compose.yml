@@ -54,3 +54,11 @@ volumes:
 networks:
   hospital-network:
     driver: bridge
+
+#
+# Author: Mateo Lasso
+# Fecha: 7-12-2025
+# Versión: 1.0
+# Descripción: Este archivo docker-compose.yml define la configuración de contenedores Docker
+#              para desplegar el sistema hospitalario completo, incluyendo base de datos MySQL
+#              y opcionalmente PHPMyAdmin para gestión visual.

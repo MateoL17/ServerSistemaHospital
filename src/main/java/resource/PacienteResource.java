@@ -7,6 +7,14 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 
+/*
+ * Author: Mateo Lasso
+ * Fecha: 7-12-2025
+ * Versión: 1.0
+ * Descripción: Esta clase denominada PacienteResource es el controlador REST
+ *              que maneja todas las operaciones HTTP relacionadas con pacientes.
+ * */
+
 @Path("/pacientes")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -14,14 +22,21 @@ public class PacienteResource {
 
     private final PacienteDAO pacienteDAO = new PacienteDAO();
 
-    // GET /api/pacientes - Obtener TODOS los pacientes
+    /*
+     * Método que maneja la solicitud GET para obtener todos los pacientes
+     * @return Respuesta HTTP con la lista de pacientes en formato JSON
+     * */
     @GET
     public Response getAll() {
         List<Paciente> pacientes = pacienteDAO.getAll();
         return Response.ok(pacientes).build();
     }
 
-    // GET /api/pacientes/{cedula} - Obtener paciente por cédula
+    /*
+     * Método que maneja la solicitud GET para obtener un paciente por cédula
+     * @param cedula Parámetro que define el número de cédula del paciente a buscar
+     * @return Respuesta HTTP con el paciente encontrado o error 404 si no existe
+     * */
     @GET
     @Path("/{cedula}")
     public Response getByCedula(@PathParam("cedula") String cedula) {
@@ -34,7 +49,11 @@ public class PacienteResource {
                 .build();
     }
 
-    // POST /api/pacientes - Crear nuevo paciente
+    /*
+     * Método que maneja la solicitud POST para crear un nuevo paciente
+     * @param paciente Parámetro que define el objeto Paciente a crear
+     * @return Respuesta HTTP con el paciente creado o mensaje de error
+     * */
     @POST
     public Response create(Paciente paciente) {
         try {
@@ -96,7 +115,12 @@ public class PacienteResource {
         }
     }
 
-    // PUT /api/pacientes/{cedula} - Actualizar paciente
+    /*
+     * Método que maneja la solicitud PUT para actualizar un paciente existente
+     * @param cedula Parámetro que define el número de cédula del paciente a actualizar
+     * @param paciente Parámetro que define el objeto Paciente con los datos actualizados
+     * @return Respuesta HTTP con el paciente actualizado o mensaje de error
+     * */
     @PUT
     @Path("/{cedula}")
     public Response update(@PathParam("cedula") String cedula, Paciente paciente) {
@@ -121,7 +145,11 @@ public class PacienteResource {
                 .build();
     }
 
-    // PUT /api/pacientes/{cedula}/activar - Activar paciente
+    /*
+     * Método que maneja la solicitud PUT para activar un paciente
+     * @param cedula Parámetro que define el número de cédula del paciente a activar
+     * @return Respuesta HTTP con mensaje de confirmación o error
+     * */
     @PUT
     @Path("/{cedula}/activar")
     public Response activar(@PathParam("cedula") String cedula) {
@@ -134,7 +162,11 @@ public class PacienteResource {
                 .build();
     }
 
-    // PUT /api/pacientes/{cedula}/desactivar - Ahora será eliminación física
+    /*
+     * Método que maneja la solicitud PUT para eliminar permanentemente un paciente
+     * @param cedula Parámetro que define el número de cédula del paciente a eliminar
+     * @return Respuesta HTTP con mensaje de confirmación o error
+     * */
     @PUT
     @Path("/{cedula}/desactivar")
     public Response desactivar(@PathParam("cedula") String cedula) {
@@ -147,7 +179,11 @@ public class PacienteResource {
                 .build();
     }
 
-    // DELETE /api/pacientes/{cedula} - Eliminar paciente (BORRADO FÍSICO)
+    /*
+     * Método que maneja la solicitud DELETE para eliminar permanentemente un paciente
+     * @param cedula Parámetro que define el número de cédula del paciente a eliminar
+     * @return Respuesta HTTP con mensaje de confirmación o error
+     * */
     @DELETE
     @Path("/{cedula}")
     public Response delete(@PathParam("cedula") String cedula) {
@@ -160,7 +196,11 @@ public class PacienteResource {
                 .build();
     }
 
-    // Método para validar cédula ecuatoriana
+    /*
+     * Método privado para validar una cédula ecuatoriana
+     * @param cedula Parámetro que define el número de cédula a validar
+     * @return true si la cédula es válida, false en caso contrario
+     * */
     private boolean validarCedulaEcuatoriana(String cedula) {
         if (cedula == null || cedula.length() != 10) {
             return false;

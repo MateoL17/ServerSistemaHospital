@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Author: Mateo Lasso
+    Fecha: 7-12-2025
+    Versión: 1.0
+    Descripción: Este archivo web.xml es el descriptor de despliegue de la aplicación web
+                 que configura la aplicación Jakarta EE para el sistema hospitalario.
+-->
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
